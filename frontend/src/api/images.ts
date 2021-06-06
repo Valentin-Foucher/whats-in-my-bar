@@ -5,8 +5,8 @@ const IMAGES_API_URL = `${API_URL}/images`;
 
 const uploadImage = async (file: File, referenceId: string) => {
   var bodyFormData = new FormData();
-  bodyFormData.append("file", file);
   bodyFormData.append("referenceId", referenceId);
+  bodyFormData.append("file", file);
 
   return await axios.request({
     url: IMAGES_API_URL,
@@ -22,8 +22,8 @@ const retrieveImage = async (filename: string) => {
 
 const updateImage = async (file: File, referenceId: string) => {
   var bodyFormData = new FormData();
-  bodyFormData.append("file", file);
   bodyFormData.append("referenceId", referenceId);
+  bodyFormData.append("file", file);
 
   return await axios.request({
     url: IMAGES_API_URL,

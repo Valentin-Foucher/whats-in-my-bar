@@ -14,6 +14,7 @@ const useStyles = makeStyles({
 export default function IngredientsList() {
   const classes = useStyles();
   const [ingredients, setIngredients] = useState<IIngredient[]>();
+  const [ingredientImages, setIngredientImages] = useState<any[]>();
 
   useEffect(() => {
     listIngredients().then((res) => {
@@ -21,19 +22,25 @@ export default function IngredientsList() {
     });
   }, []);
 
+  useEffect(() => {
+    (async function updateImages() {
+      if (ingredients) {
+        setIngredientImages(await Promise.all(ingredients.map(async (i: IIngredient) => await retrieveImage(i._id))));
+      };
+    })()}, [ingredients]);
+
   const handleClick = (e: ChangeEvent<HTMLInputElement>, i: IIngredient) => {
     if (e.target && e.target.files) uploadImage(e.target.files[0], i._id);
   };
+
   return (
     <Box>
       {ingredients ? (
-        ingredients.map(async (i: IIngredient) => {
-          const test = await retrieveImage(i._id);
-          console.log(test);
+        ingredients.map((i: IIngredient) => {
           return (
             <Box display="flex" justifyContent="space-between">
               <Typography> {i.name}</Typography>
-              //<Box> {test} </Box>
+              //<Box> {ingredientImages} </Box>
               <input
                 accept="image/*"
                 className={classes.input}
