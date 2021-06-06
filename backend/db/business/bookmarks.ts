@@ -1,9 +1,10 @@
+import { ObjectID } from 'bson';
 import { IBookmark } from 'whats-in-my-bar';
 import { ITEM_TYPES } from '../../helpers/constants';
 import Bookmark from '../models/bookmarks';
 
 module Bookmarks {
-  export const create = async (item: string, type: typeof ITEM_TYPES[number]): Promise<IBookmark> => {
+  export const create = async (item: ObjectID, type: typeof ITEM_TYPES[number]): Promise<IBookmark> => {
     return await Bookmark.create({ item, type });
   };
 
@@ -11,11 +12,11 @@ module Bookmarks {
     return await Bookmark.find({ type });
   };
 
-  export const getById = async (id: string): Promise<IBookmark> => {
+  export const getById = async (id: ObjectID): Promise<IBookmark> => {
     return await Bookmark.findById(id);
   };
 
-  export const getByItem = async (item: string): Promise<IBookmark> => {
+  export const getByItem = async (item: ObjectID): Promise<IBookmark> => {
     return await Bookmark.findOne({ item });
   };
 
@@ -23,7 +24,7 @@ module Bookmarks {
     return await Bookmark.find({ type });
   };
 
-  export const remove = async (id: string) => {
+  export const remove = async (id: ObjectID) => {
     await Bookmark.findByIdAndDelete(id);
   }
 

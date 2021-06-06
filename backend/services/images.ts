@@ -1,3 +1,4 @@
+import { ObjectID } from 'bson';
 import { Response } from 'express';
 import { Request } from 'express';
 import { Types } from 'mongoose';
@@ -11,11 +12,11 @@ import images from './../db/business/images';
 const uploadImage = async (req: Request, res: Response) => {
   const { filename, originalname } = req.file;
 
-  if (await images.count(filename) > 0) {
+  if (await images.count(new ObjectID(filename)) > 0) {
     return conflict(res, 'An image already exists for this item');
   };
 
-  await images.create(filename, path.extname(originalname).replace('.', ''));
+  await images.create(new ObjectID(filename), path.extname(originalname).replace('.', ''));
 
   noReply(res);
 };
@@ -47,9 +48,9 @@ const retrieveImage = async (req: Request, res: Response) => {
 
 const updateImage = async (req: Request, res: Response) => {
   const { filename, originalname } = req.file;
-  await images.removeByFilename(filename);
+  await images.removeByFilename(new ObjectID(filename));
 
-  await images.create(filename, path.extname(originalname).replace('.', ''));
+  await images.create(new ObjectID(filename), path.extname(originalname).replace('.', ''));
 
   noReply(res);
 };

@@ -1,5 +1,5 @@
-import Bar from '../models/bars';
 import { ObjectID } from 'bson';
+import Bar from '../models/bars';
 import { IBar } from 'whats-in-my-bar';
 
 module Bars {

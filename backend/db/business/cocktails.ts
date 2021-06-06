@@ -1,3 +1,4 @@
+import { ObjectID } from 'bson';
 import Cocktail from '../models/cocktails';
 import { FilterQuery } from 'mongoose';
 import { IngredientQuantity, ICocktail } from 'whats-in-my-bar';
@@ -13,7 +14,7 @@ module Cocktails {
     return await Cocktail.find(query, null, { sort: { name: 1 } });
   };
 
-  export const getById = async (id: string): Promise<ICocktail> => {
+  export const getById = async (id: ObjectID): Promise<ICocktail> => {
     return await Cocktail.findById(id);
   };
 

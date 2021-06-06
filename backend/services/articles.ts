@@ -1,10 +1,11 @@
+import { ObjectID } from 'bson';
 import { Request, Response } from 'express';
 import articles from '../db/business/articles';
 import { notFound, ok } from '../helpers/communication';
 
 
 const getArticle = async (req: Request, res: Response) => {
-  const article = await articles.getById(req.params.id);
+  const article = await articles.getById(new ObjectID(req.params.id));
 
   if (!article) {
     return notFound(res);

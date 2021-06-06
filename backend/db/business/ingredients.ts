@@ -1,3 +1,4 @@
+import { ObjectID } from 'bson';
 import { IIngredient } from 'whats-in-my-bar';
 import Ingredient from '../models/ingredients';
 
@@ -10,7 +11,7 @@ module Ingredients {
     return await Ingredient.find({ ...filters });
   };
 
-  export const getById = async (id: string): Promise<IIngredient> => {
+  export const getById = async (id: ObjectID): Promise<IIngredient> => {
     return await Ingredient.findById(id);
   };
 

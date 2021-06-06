@@ -1,3 +1,4 @@
+import { ObjectID } from 'bson';
 import { Request, Response } from 'express';
 import { Types } from 'mongoose';
 import { ICocktail } from 'whats-in-my-bar';
@@ -30,7 +31,7 @@ const createCocktail = async (req: Request, res: Response) => {
 };
 
 const getCocktail = async (req: Request, res: Response) => {
-  const cocktail = await cocktails.getById(req.params.id);
+  const cocktail = await cocktails.getById(new ObjectID(req.params.id));
 
   if (!cocktail) {
     return notFound(res);

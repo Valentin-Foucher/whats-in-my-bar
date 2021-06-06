@@ -1,3 +1,4 @@
+import { ObjectID } from 'bson';
 import { COCKTAIL, ARTICLE, ITEM_TYPES } from './../helpers/constants';
 import { Request, Response } from 'express';
 import bookmarks from '../db/business/bookmarks';
@@ -45,7 +46,7 @@ const createBookmark = async (req: Request, res: Response) => {
 
 const deleteBookmark = async(req: Request, res: Response) => {
   try {
-    await bookmarks.remove(req.params.id)
+    await bookmarks.remove(new ObjectID(req.params.id))
   } catch (err) {
     return notFound(res, 'This bookmark does not exist');
   };

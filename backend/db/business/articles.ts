@@ -1,3 +1,4 @@
+import { ObjectID } from 'bson';
 import { FilterQuery } from 'mongoose';
 import { IArticle } from 'whats-in-my-bar';
 import Article from '../models/articles';
@@ -22,7 +23,7 @@ module Articles {
     ]);
   };
 
-  export const getById = async (id: string): Promise<IArticle> => {
+  export const getById = async (id: ObjectID): Promise<IArticle> => {
     return await Article.findById(id);
   };
 
