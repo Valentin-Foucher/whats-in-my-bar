@@ -1,0 +1,26 @@
+{
+  "name": "whats-in-my-bar",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "nodemon": "^2.0.7",
+    "react-scripts": "4.0.3"
+  },
+  "engines": {
+    "node": "12.x",
+    "yarn": "1.x"
+  },
+  "scripts": {
+    "heroku-prebuild": "yarn --cwd backend install && yarn --cwd frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Valentin-Foucher/whats-in-my-bar.git"
+  },
+  "author": "Valentin Foucher",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Valentin-Foucher/whats-in-my-bar/issues"
+  },
+  "homepage": "https://github.com/Valentin-Foucher/whats-in-my-bar#readme"
+}

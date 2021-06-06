@@ -9,7 +9,7 @@
     "start:production": "ENV=production DB_PORT=27017 DB_HOST=$MONGO_HOST DB_USER=$MONGO_USER DB_PASSWORD=$MONGO_PASSWORD nodemon ./app.ts localhost 8080",
     "images": "bash -c 'cd ${0}/ && mongofiles --replace --db bar put *'"
   },
-  "author": "",
+  "author": "Valentin Foucher",
   "license": "MIT",
   "dependencies": {
     "@types/btoa": "^1.2.3",
