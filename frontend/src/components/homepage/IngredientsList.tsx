@@ -15,7 +15,7 @@ export default function IngredientsList() {
   return (
     <Box>
       {ingredients ? (
-        ingredients.map((i) => (
+        ingredients.map((i: any) => (
           <Box display="flex" justifyContent="space-between">
             <Typography> {i.name}</Typography>
             <input

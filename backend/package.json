@@ -7,7 +7,6 @@
     "test": "DB_NAME=test TEST=true mocha -r ts-node/register --exit tests/**/*.spec.ts",
     "start": "nodemon ./app.ts localhost 8080",
     "start:production": "ENV=production DB_PORT=27017 DB_HOST=$MONGO_HOST DB_USER=$MONGO_USER DB_PASSWORD=$MONGO_PASSWORD nodemon ./app.ts localhost 8080",
-    "docker": "docker build . -t whats-in-my-bar-backend",
     "images": "bash -c 'cd ${0}/ && mongofiles --replace --db bar put *'"
   },
   "author": "",
