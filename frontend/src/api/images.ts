@@ -1,19 +1,18 @@
-
-import { API_URL } from './common';
+import { API_URL } from "./common";
 import axios from "axios";
 
 const IMAGES_API_URL = `${API_URL}/images`;
 
-const uploadImage = async (file: string, referenceId: string) => {
+const uploadImage = async (file: File, referenceId: string) => {
   var bodyFormData = new FormData();
-  bodyFormData.append('file', file);
-  bodyFormData.append('referenceId', referenceId);
+  bodyFormData.append("file", file);
+  bodyFormData.append("referenceId", referenceId);
 
   return await axios.request({
     url: IMAGES_API_URL,
-    method: 'post',
+    method: "post",
     data: bodyFormData,
-    headers: { "Content-Type": "multipart/form-data" }
+    headers: { "Content-Type": "multipart/form-data" },
   });
 };
 
