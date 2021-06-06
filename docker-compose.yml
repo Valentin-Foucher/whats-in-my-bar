@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  backend:
+    build:
+      context: ./backend
+    environment:
+      - DB_PORT=27018
+      - DB_HOST=mongo
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "mongo"
+    networks:
+      - network
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - "backend"
+    networks:
+      - network
+
+  mongo:
+    image: "mongo:4.4.6"
+    ports:
+      - 27018:27018
+    volumes:
+      - /var/db/whats-in-my-bar/data:/data/db
+    networks:
+      - network
+    command: mongod --port 27018 --bind_ip_all
+
+networks:
+  network:
+    driver: bridge

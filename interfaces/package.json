@@ -5,6 +5,7 @@
   "main": "index.ts",
   "author": "",
   "dependencies": {
+    "bson": "^4.4.0",
     "mongoose": "^5.12.13"
   }
 }
