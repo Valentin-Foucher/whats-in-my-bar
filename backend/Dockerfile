@@ -1,11 +1,11 @@
 FROM node:16.2.0-slim
 
-WORKDIR /var/
+WORKDIR /var/app
 
 COPY interfaces interfaces
 COPY backend backend
 
-WORKDIR backend
+WORKDIR /var/app/backend
 
 RUN yarn install --silent
 
