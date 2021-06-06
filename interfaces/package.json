@@ -1,0 +1,10 @@
+{
+  "name": "interfaces",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "author": "",
+  "dependencies": {
+    "mongoose": "^5.12.13"
+  }
+}
