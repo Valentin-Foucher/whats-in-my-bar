@@ -40,7 +40,7 @@ export default function IngredientsList() {
           return (
             <Box display="flex" justifyContent="space-between">
               <Typography> {i.name}</Typography>
-              //<Box> {ingredientImages} </Box>
+              <Box> {ingredientImages} </Box>
               <input
                 accept="image/*"
                 className={classes.input}

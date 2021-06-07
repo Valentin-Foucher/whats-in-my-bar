@@ -25,7 +25,7 @@ const retrieveImage = async (req: Request, res: Response) => {
   const { filename } = req.params;
 
   gfs.find({ filename }, { sort: { uploadDate: 1 } }).toArray((_, files) => {
-    if (!files) {
+    if (files.length === 0) {
       return notFound(res);;
     };
 
@@ -36,7 +36,6 @@ const retrieveImage = async (req: Request, res: Response) => {
     });
 
     const file = files[0];
-
     if (FILE_TYPES.includes(file.contentType.replace('image/', ''))) {
       gfs.openDownloadStreamByName(filename).pipe(res);
     } else {
