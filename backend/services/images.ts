@@ -24,7 +24,7 @@ const uploadImage = async (req: Request, res: Response) => {
 const retrieveImage = async (req: Request, res: Response) => {
   const { filename } = req.params;
 
-  gfs.find({ filename }, { sort: { uploadDate: 1 } }).toArray((_, files) => {
+  gfs.find({ filename }).sort({ uploadDate: 1 }).toArray((_, files) => {
     if (files.length === 0) {
       return notFound(res);;
     };

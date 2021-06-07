@@ -1,13 +1,13 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
-import { Box, IconButton, Typography, makeStyles } from "@material-ui/core";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
-import { listIngredients } from "../../api/ingredients";
-import { uploadImage, retrieveImage } from "../../api/images";
-import { IIngredient } from "../../../../interfaces/src/ingredients";
+import React, { useState, useEffect, ChangeEvent } from 'react';
+import { Box, IconButton, Typography, makeStyles } from '@material-ui/core';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import { listIngredients } from '../../api/ingredients';
+import { uploadImage, retrieveImage } from '../../api/images';
+import { IIngredient } from '../../../../interfaces/src/ingredients';
 
 const useStyles = makeStyles({
   input: {
-    display: "none",
+    display: 'none',
   },
 });
 
@@ -36,25 +36,25 @@ export default function IngredientsList() {
   return (
     <Box>
       {ingredients ? (
-        ingredients.map((i: IIngredient) => {
+        ingredients.map((ingredient: IIngredient, i: number) => {
           return (
-            <Box display="flex" justifyContent="space-between">
-              <Typography> {i.name}</Typography>
+            <Box key={`${ingredient}-${i}`} display='flex' justifyContent='space-between'>
+              <Typography> {ingredient.name}</Typography>
               <Box> {ingredientImages} </Box>
               <input
-                accept="image/*"
+                accept='image/*'
                 className={classes.input}
-                id="icon-button-file"
-                type="file"
+                id='icon-button-file'
+                type='file'
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleClick(e, i)
+                  handleClick(e, ingredient)
                 }
               />
-              <label htmlFor="icon-button-file">
+              <label htmlFor='icon-button-file'>
                 <IconButton
-                  color="primary"
-                  aria-label="upload picture"
-                  component="span">
+                  color='primary'
+                  aria-label='upload picture'
+                  component='span'>
                   <PhotoCamera />
                 </IconButton>
               </label>

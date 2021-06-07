@@ -5,9 +5,9 @@ import {
   Tab,
   Tabs,
   Typography,
-} from "@material-ui/core";
-import React, { ChangeEvent, useState } from "react";
-import IngredientsList from "./IngredientsList";
+} from '@material-ui/core';
+import React, { ChangeEvent, useState } from 'react';
+import IngredientsList from './IngredientsList';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -17,12 +17,12 @@ interface TabPanelProps {
 
 const useStyles = makeStyles({
   container: {
-    width: "90vw",
-    height: "75vh",
+    width: '90vw',
+    height: '75vh',
     padding: 4,
-    border: "solid 1px grey",
+    border: 'solid 1px grey',
     borderRadius: 4,
-    alignContent: "center",
+    alignContent: 'center',
   },
   tabMenu: {
     fontWeight: 600,
@@ -36,14 +36,14 @@ function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
   return (
     <div
-      role="tabpanel"
+      role='tabpanel'
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}>
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          <Typography component={'span'} >{children}</Typography>
         </Box>
       )}
     </div>
@@ -59,18 +59,18 @@ export default function HomeBox() {
   };
 
   return (
-    <Container className={classes.container} maxWidth="xl">
+    <Container className={classes.container} maxWidth='xl'>
       <Tabs
-        aria-label="tabs-menu"
-        textColor="primary"
-        indicatorColor="primary"
+        aria-label='tabs-menu'
+        textColor='primary'
+        indicatorColor='primary'
         value={menuIndex}
         onChange={handleChange}
-        variant="fullWidth"
+        variant='fullWidth'
         className={classes.tabMenu}>
-        <Tab label="Ingredients" className={classes.tab} />
-        <Tab label="Cocktails" className={classes.tab} />
-        <Tab label="My Bar" className={classes.tab} />
+        <Tab label='Ingredients' className={classes.tab} />
+        <Tab label='Cocktails' className={classes.tab} />
+        <Tab label='My Bar' className={classes.tab} />
       </Tabs>
       <TabPanel value={menuIndex} index={0}>
         <IngredientsList />
