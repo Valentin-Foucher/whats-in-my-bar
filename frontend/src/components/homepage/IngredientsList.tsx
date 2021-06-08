@@ -1,9 +1,9 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
-import { Box, IconButton, Typography, makeStyles } from '@material-ui/core';
+import { Box, IconButton, makeStyles, Typography } from '@material-ui/core';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import { listIngredients } from '../../api/ingredients';
-import { uploadImage, retrieveImage } from '../../api/images';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { IIngredient } from '../../../../interfaces/src/ingredients';
+import { retrieveImage, uploadImage } from '../../api/images';
+import { listIngredients } from '../../api/ingredients';
 
 const useStyles = makeStyles({
   input: {
@@ -24,14 +24,20 @@ export default function IngredientsList() {
 
   useEffect(() => {
     (async function updateImages() {
+
       if (ingredients) {
-        setIngredientImages(await Promise.all(ingredients.map(async (i: IIngredient) => await retrieveImage(i._id))));
+        debugger
+        console.log(await retrieveImage(ingredients[0]._id));
+        const test = await Promise.all(ingredients.map(async (i: IIngredient) => await retrieveImage(i._id)));
+        setIngredientImages(test)
       };
     })()}, [ingredients]);
 
   const handleClick = (e: ChangeEvent<HTMLInputElement>, i: IIngredient) => {
     if (e.target && e.target.files) uploadImage(e.target.files[0], i._id);
   };
+
+  console.log(ingredientImages)
 
   return (
     <Box>
@@ -40,7 +46,7 @@ export default function IngredientsList() {
           return (
             <Box key={`${ingredient}-${i}`} display='flex' justifyContent='space-between'>
               <Typography> {ingredient.name}</Typography>
-              <Box> {ingredientImages} </Box>
+              <Box>  </Box>
               <input
                 accept='image/*'
                 className={classes.input}

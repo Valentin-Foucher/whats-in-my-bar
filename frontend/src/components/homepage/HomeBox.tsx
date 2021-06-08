@@ -4,7 +4,7 @@ import {
   makeStyles,
   Tab,
   Tabs,
-  Typography,
+  Typography
 } from '@material-ui/core';
 import React, { ChangeEvent, useState } from 'react';
 import IngredientsList from './IngredientsList';
@@ -59,7 +59,7 @@ export default function HomeBox() {
   };
 
   return (
-    <Container className={classes.container} maxWidth='xl'>
+    <Container className={classes.container} maxWidth='lg'>
       <Tabs
         aria-label='tabs-menu'
         textColor='primary'

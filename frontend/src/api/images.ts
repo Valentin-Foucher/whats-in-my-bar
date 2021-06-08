@@ -1,5 +1,5 @@
-import { API_URL } from './common';
 import axios from 'axios';
+import { API_URL } from './common';
 
 const IMAGES_API_URL = `${API_URL}/images`;
 
@@ -17,7 +17,7 @@ const uploadImage = async (file: File, referenceId: string) => {
 };
 
 const retrieveImage = async (filename: string) => {
-  return await axios.get(`${IMAGES_API_URL}/${filename}`);
+  return await axios.get(`${IMAGES_API_URL}/${filename}`)
 };
 
 const updateImage = async (file: File, referenceId: string) => {
