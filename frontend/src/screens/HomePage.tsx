@@ -33,12 +33,13 @@ export default function HomePage () {
   };
 
   return (
-    <Box display='flex'>
-      <FilterMenu />
+
       <Box>
         <Button variant='outlined' color='primary' onClick={handleClick} className={classes.connexionButton}> Connect</Button>
         <ConnectModal open={openConnect} onClose={handleCloseModal}/>
         <Typography variant={'h1'} className={classes.title}> What's in my bar ? </Typography>
+        <Box display='flex'>
+        <FilterMenu />
         <HomeBox />
       </Box>
     </Box>

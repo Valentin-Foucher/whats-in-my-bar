@@ -18,6 +18,7 @@ interface TabPanelProps {
 const useStyles = makeStyles({
   container: {
     width: '90vw',
+    marginLeft: 20,
     height: '75vh',
     padding: 4,
     border: 'solid 1px grey',
