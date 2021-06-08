@@ -2,9 +2,10 @@ import { ObjectID } from 'bson';
 import { Response } from 'express';
 import { Request } from 'express';
 import { Types } from 'mongoose';
+import fs from 'fs';
 import path from 'path';
 import { gfs } from '../app';
-import { badRequest, conflict, noReply, notFound } from '../helpers/communication';
+import { badRequest, conflict, noReply } from '../helpers/communication';
 import { FILE_TYPES } from '../helpers/constants';
 import images from './../db/business/images';
 
@@ -25,23 +26,22 @@ const retrieveImage = async (req: Request, res: Response) => {
   const { filename } = req.params;
 
   gfs.find({ filename }).sort({ uploadDate: 1 }).toArray((_, files) => {
-    if (files.length === 0) {
-      return notFound(res);;
-    };
+    if (files.length !== 0) {
+      files.forEach((file, i) => {
+        if (i > 0) {
+          gfs.delete(new Types.ObjectId(file._id), () => {})
+        };
+      });
 
-    files.forEach((file, i) => {
-      if (i > 0) {
-        gfs.delete(new Types.ObjectId(file._id), () => {})
+      const file = files[0];
+      if (FILE_TYPES.includes(file.contentType.replace('image/', ''))) {
+        gfs.openDownloadStreamByName(filename).pipe(res);
+      } else {
+        badRequest(res, 'Not a valid image');
       };
-    });
-
-    const file = files[0];
-    if (FILE_TYPES.includes(file.contentType.replace('image/', ''))) {
-      gfs.openDownloadStreamByName(filename).pipe(res);
     } else {
-      badRequest(res, 'Not a valid image');
-    };
-
+      fs.createReadStream("../assets/not_found.png").pipe(res);
+    }
   });
 };
 
