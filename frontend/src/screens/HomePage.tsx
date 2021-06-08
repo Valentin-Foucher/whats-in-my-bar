@@ -1,6 +1,7 @@
-import { Button, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 import ConnectModal from '../components/homepage/ConnectModal';
+import FilterMenu from '../components/homepage/FilterMenu';
 import HomeBox from '../components/homepage/HomeBox';
 
 
@@ -32,11 +33,14 @@ export default function HomePage () {
   };
 
   return (
-    <>
-      <Button variant='outlined' color='primary' onClick={handleClick} className={classes.connexionButton}> Connect</Button>
-      <ConnectModal open={openConnect} onClose={handleCloseModal}/>
-      <Typography variant={'h1'} className={classes.title}> What's in my bar ? </Typography>
-      <HomeBox />
-    </>
+    <Box display='flex'>
+      <FilterMenu />
+      <Box>
+        <Button variant='outlined' color='primary' onClick={handleClick} className={classes.connexionButton}> Connect</Button>
+        <ConnectModal open={openConnect} onClose={handleCloseModal}/>
+        <Typography variant={'h1'} className={classes.title}> What's in my bar ? </Typography>
+        <HomeBox />
+      </Box>
+    </Box>
   );
 };
