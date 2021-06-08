@@ -1,8 +1,7 @@
 import { ObjectID } from 'bson';
-import { Response } from 'express';
-import { Request } from 'express';
-import { Types } from 'mongoose';
+import { Request, Response } from 'express';
 import fs from 'fs';
+import { Types } from 'mongoose';
 import path from 'path';
 import { gfs } from '../app';
 import { badRequest, conflict, noReply } from '../helpers/communication';
@@ -40,7 +39,7 @@ const retrieveImage = async (req: Request, res: Response) => {
         badRequest(res, 'Not a valid image');
       };
     } else {
-      fs.createReadStream("../assets/not_found.png").pipe(res);
+      fs.createReadStream(path.join('assets', 'not_found.png')).pipe(res);
     }
   });
 };
