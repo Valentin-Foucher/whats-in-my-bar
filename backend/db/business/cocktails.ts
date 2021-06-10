@@ -2,16 +2,23 @@ import { ObjectID } from 'bson';
 import Cocktail from '../models/cocktails';
 import { FilterQuery } from 'mongoose';
 import { IngredientQuantity, ICocktail } from 'whats-in-my-bar';
+
 module Cocktails {
   export const create = async (name: string, glass_type: string, ingredients: Array<IngredientQuantity>, category: string, author: string, characteristics?: { [key: string]: boolean }, description?: string): Promise<ICocktail> => {
     return await Cocktail.create({ name, glass_type, ingredients, category, author, characteristics, description });
   };
 
   export const list = async (username: string, filters?: { [key: string]: any }): Promise<Array<ICocktail>> => {
-    const additionalQuery = username ? { '$or': [{ public: true }, { author: username }] } : { public: true };
-    const query = { ...filters, ...additionalQuery};
+    let ingredients = filters['ingredients'];
+    if (ingredients) {
+      ingredients = (ingredients instanceof Array ? ingredients : [ingredients]);
+      const ingredientSubQuery = ingredients.map((ingredient: IngredientQuantity) => ({ $in: [ingredient.id] }));
+      filters['ingredients'] = { $and: ingredientSubQuery };
+    };
 
-    return await Cocktail.find(query, null, { sort: { name: 1 } });
+    const additionalQuery = username ? { '$or': [{ public: true }, { author: username }] } : { public: true };
+
+    return await Cocktail.find({ ...filters, ...additionalQuery}, null, { sort: { name: 1 } });
   };
 
   export const getById = async (id: ObjectID): Promise<ICocktail> => {
