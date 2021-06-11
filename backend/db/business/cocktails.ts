@@ -10,13 +10,14 @@ module Cocktails {
 
   export const list = async (username: string, filters?: { [key: string]: any }): Promise<Array<ICocktail>> => {
     let ingredients = filters['ingredients'];
+    let additionalQuery: Object = username ? { $or: [{ public: true }, { author: username }] } : { public: true };
+
     if (ingredients) {
       ingredients = (ingredients instanceof Array ? ingredients : [ingredients]);
-      const ingredientSubQuery = ingredients.map((ingredient: IngredientQuantity) => ({ $in: [ingredient.id] }));
-      filters['ingredients'] = { $and: ingredientSubQuery };
+      const subQuery = ingredients.map((ingredient: string) => ({ 'ingredients.id': { $in: [ingredient] } }));
+      delete filters.ingredients;
+      additionalQuery = { $and: [...subQuery, additionalQuery] };
     };
-
-    const additionalQuery = username ? { '$or': [{ public: true }, { author: username }] } : { public: true };
 
     return await Cocktail.find({ ...filters, ...additionalQuery}, null, { sort: { name: 1 } });
   };
