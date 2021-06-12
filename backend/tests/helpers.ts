@@ -99,8 +99,9 @@ export const createCocktail = (app: Express, cookie: string, cocktailParameters:
 
 // ----------- \\ BOOKMARK // ----------- \\
 
-export const createBookmark = (app: Express, item: ObjectID, type: string ) => {
+export const createBookmark = (app: Express, cookie: string, item: ObjectID, type: string ) => {
   return chai.request(app)
   .post(`/api/bookmarks`)
+  .set('Cookie', cookie)
   .send({ item, type });
 };

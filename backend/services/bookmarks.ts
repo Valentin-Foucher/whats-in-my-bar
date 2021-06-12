@@ -1,4 +1,3 @@
-import { ObjectID } from 'bson';
 import { COCKTAIL, ARTICLE, ITEM_TYPES } from './../helpers/constants';
 import { Request, Response } from 'express';
 import bookmarks from '../db/business/bookmarks';
@@ -14,7 +13,7 @@ const listBookmarks = async (req: Request, res: Response) => {
     return badRequest(res, 'Provide a type as parameter to retrieve bookmarks')
   }
 
-  const bookmarkList = await bookmarks.list(type);
+  const bookmarkList = await bookmarks.list(req.userId, type);
 
   ok(res, { bookmarks: bookmarkList });
 };
@@ -23,7 +22,7 @@ const listBookmarks = async (req: Request, res: Response) => {
 const createBookmark = async (req: Request, res: Response) => {
   const { item, type } = req.body;
 
-  if (await bookmarks.getByItem(item)) {
+  if (await bookmarks.getByItem(req.userId, item)) {
     return conflict(res, 'You already bookmarked this item');
   };
 
@@ -39,15 +38,14 @@ const createBookmark = async (req: Request, res: Response) => {
     badRequest(res, `Invalid type ${type}`)
   };
 
-  const bookmark = await bookmarks.create(item, type);
+  const bookmark = await bookmarks.create(req.userId, item, type);
 
   ok(res, { id: bookmark.id });
 };
 
 const deleteBookmark = async(req: Request, res: Response) => {
-  try {
-    await bookmarks.remove(new ObjectID(req.params.id))
-  } catch (err) {
+  const deleted = await bookmarks.remove(req.userId, req.params.id);
+  if (!deleted) {
     return notFound(res, 'This bookmark does not exist');
   };
 

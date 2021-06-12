@@ -9,6 +9,13 @@ module Cocktails {
   };
 
   export const list = async (username: string, filters?: { [key: string]: any }): Promise<Array<ICocktail>> => {
+    let sort = filters['sort'];
+    if (sort) {
+      delete filters.sort;
+    } else {
+      sort = { name: 1 };
+    };
+
     let ingredients = filters['ingredients'];
     let additionalQuery: Object = username ? { $or: [{ public: true }, { author: username }] } : { public: true };
 
@@ -19,7 +26,7 @@ module Cocktails {
       additionalQuery = { $and: [...subQuery, additionalQuery] };
     };
 
-    return await Cocktail.find({ ...filters, ...additionalQuery}, null, { sort: { name: 1 } });
+    return await Cocktail.find({ ...filters, ...additionalQuery}, null, { sort });
   };
 
   export const getById = async (id: ObjectID): Promise<ICocktail> => {

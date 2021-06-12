@@ -5,6 +5,7 @@ import { ITEM_TYPES } from '../../helpers/constants';
 
 export const BookmarkSchemaDefintion = {
   item: { type: Types.ObjectId, unique: true, required: true },
+  userId: { type: Types.ObjectId, required: true },
   type: { type: String, required: true, enum: ITEM_TYPES }
 };
 
