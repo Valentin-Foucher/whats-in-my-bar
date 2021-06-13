@@ -8,7 +8,7 @@ import cocktails from '../db/business/cocktails';
 import ingredients from '../db/business/ingredients';
 import tokens from '../db/business/tokens';
 import users from '../db/business/users';
-import { logIn, signUp, createCocktail, createBar, updateBar } from './helpers';
+import { logIn, signUp, createCocktail, createBar, updateBar, createBookmark } from './helpers';
 import bars from '../db/business/bars';
 
 const { app } = server;
@@ -200,6 +200,64 @@ describe('Cocktails API', () => {
         expect(res).to.have.status(200);
         expect(res.body.cocktails).to.have.length(1);
       });
+    });
+  });
+
+  describe('GET cocktails from popularity', () => {
+    it('should return an empty list', (done) => {
+      chai.request(app)
+      .get(`/api/cocktails?popularity=true`)
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        expect(res.body.cocktails).to.have.length(0);
+        done()
+      });
+    });
+
+    it('should return return cocktails with bookmarks in a descending order', async () => {
+      const fernet = await ingredients.create('fernet branca', 'liqueurs');
+      const cocktail1 = await createTestCocktail();
+      const cocktail2 = await createTestCocktail('coke with crushed ice', 'lowball', '14cl', 'Batman', { refreshing: true });
+      const cocktail3 = await createTestCocktail('fernet con coca', 'highball', '18cl', 'Oscar Becerra', { herbal: true, smooth: true }, [{ id: fernet.id, quantity: '3cl'}, { id: coke.id, quantity: '15cl'} ]);
+
+      for (const cocktail of [cocktail1, cocktail2, cocktail3]) {
+        cocktail.public = true;
+        await cocktail.save()
+      }
+
+      const username = 'anotherUser'
+      const password = 'Admin-123456'
+      await chai.request(app)
+      .post('/api/accounts/signup')
+      .send({
+        'username': username,
+        'password': password,
+        'email': 'biggie@pop.pa'
+      });
+      const otherCookie = (await chai.request(app)
+      .post('/api/accounts/login')
+      .send({
+        'username': username,
+        'password': password
+      })).header['set-cookie'];
+
+      await createBookmark(app, cookie, cocktail1.id, 'cocktail');
+      await createBookmark(app, cookie, cocktail2.id, 'cocktail');
+      await createBookmark(app, otherCookie, cocktail1.id, 'cocktail');
+
+      let res = await chai.request(app).get(`/api/cocktails?popularity=true`);
+
+      expect(res).to.have.status(200);
+      expect(res.body.cocktails).to.have.length(2);
+      expect(res.body.cocktails[0]._id).to.equal(cocktail1.id.toString());
+      expect(res.body.cocktails[1]._id).to.equal(cocktail2.id.toString());
+
+      res = await chai.request(app).get(`/api/cocktails?popularity=true&characteristics.sweet=true`);
+
+      expect(res).to.have.status(200);
+      expect(res.body.cocktails).to.have.length(1);
+      expect(res.body.cocktails[0]._id).to.equal(cocktail1.id.toString());
     });
   });
 

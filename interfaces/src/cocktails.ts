@@ -12,4 +12,5 @@ export interface ICocktail extends Document {
   description?: string;
   author?: string;
   public?: boolean;
+  popularity?: number; // computed
 };

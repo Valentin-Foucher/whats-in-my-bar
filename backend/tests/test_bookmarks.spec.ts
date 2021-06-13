@@ -11,7 +11,6 @@ import { createBookmark, signUp, logIn } from './helpers';
 const { app } = server;
 
 let ingredient = null;
-let user = null;
 let cookie = null;
 
 chai.should();
@@ -31,7 +30,7 @@ describe('Bookmarks API', () => {
 
   before(async () => {
     ingredient = await ingredients.create('coke', 'other');
-    user = await signUp(app);
+    await signUp(app);
     cookie = (await logIn(app)).header['set-cookie'];
   });
 
