@@ -12,16 +12,17 @@ const useStyles = makeStyles({
     height: 300,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
-    borderRadius: '10px 10px 50px 50px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end'
+
   },
   input: {
     display: 'none'
   },
   ingredientCards: {
-    borderRadius: 6
+    borderRadius: 6,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+
   }
 });
 
@@ -35,28 +36,28 @@ export default function IngredientsList() {
     });
   }, []);
 
-  const handleClick = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target && e.target.files) uploadImage(e.target.files[0], e.target.getAttribute('referenceId') as string);
+  const handleClick = (e: ChangeEvent<HTMLInputElement>, ingredientId: string) => {
+    if (e.target && e.target.files) uploadImage(e.target.files[0], ingredientId);
   };
 
   return (
-    <Box>
+    <Box display='flex' flexWrap='wrap'>
       {ingredients ? (
         ingredients.map((ingredient: IIngredient, i: number) => {
           return <Box key={`${ingredient}-${i}`} display='flex' justifyContent='space-between'>
             <Box className={classes.ingredientCards}>
-              <Box style={{ backgroundImage: `url(${IMAGES_API_URL}/${ingredient._id})` }} className={classes.imageContainer}>
+              <Box 
+              style={{ backgroundImage: `url(${IMAGES_API_URL}/${ingredient._id})` }} className={classes.imageContainer}>
                 <Typography> {ingredient.name}</Typography>
-                <Button variant='contained'>+  Add</Button>
               </Box>
+              <Button variant='contained'>+  Add</Button>
             </Box>
             <input
               accept='image/*'
               className={classes.input}
-              {...{referenceId:ingredient._id}}
               id={ingredient._id}
               type='file'
-              onChange={(e: ChangeEvent<HTMLInputElement>) => handleClick(e)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleClick(e, ingredient._id)}
             />
             <label htmlFor={ingredient._id}>
               <IconButton
