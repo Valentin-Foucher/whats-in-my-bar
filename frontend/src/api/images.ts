@@ -33,4 +33,4 @@ const updateImage = async (file: File, referenceId: string) => {
   });
 };
 
-export { uploadImage, retrieveImage, updateImage };
+export { uploadImage, retrieveImage, updateImage, IMAGES_API_URL };
