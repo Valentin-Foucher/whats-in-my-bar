@@ -20,9 +20,6 @@ const useStyles = makeStyles({
     width: '90vw',
     marginLeft: 20,
     height: '75vh',
-    padding: 4,
-    border: 'solid 1px grey',
-    borderRadius: 4,
     alignContent: 'center',
   },
   tabMenu: {
@@ -60,7 +57,7 @@ export default function HomeBox() {
   };
 
   return (
-    <Container className={classes.container} maxWidth='lg'>
+    <Container className={classes.container} maxWidth='xl'>
       <Tabs
         aria-label='tabs-menu'
         textColor='primary'

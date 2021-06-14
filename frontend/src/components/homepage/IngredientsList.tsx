@@ -1,18 +1,18 @@
 import { Box, Button, IconButton, makeStyles, Typography } from '@material-ui/core';
 import { PhotoCamera } from '@material-ui/icons';
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
 import { IIngredient } from '../../../../interfaces/src/ingredients';
 import { IMAGES_API_URL, uploadImage } from '../../api/images';
 import { listIngredients } from '../../api/ingredients';
-import InfiniteScroll from 'react-infinite-scroller';
 
 
 const SCROLL_SIZE = 15;
 
 const useStyles = makeStyles({
   imageContainer: {
-    width: 300,
-    height: 300,
+    width: 200,
+    height: 200,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
 
@@ -29,7 +29,10 @@ const useStyles = makeStyles({
   infiniteScroll: {
     display: 'flex',
     flexWrap: 'wrap'
-  }
+  },
+  addButton: {
+    fontWeight: 600,
+  },
 });
 
 export default function IngredientsList() {
@@ -68,34 +71,37 @@ export default function IngredientsList() {
       hasMore={ingredients ? cursor < ingredients.length : false}
       className={classes.infiniteScroll}
   >
-    {visibleIngredients ?
-      visibleIngredients
-        .map((ingredient: IIngredient, i: number) => {
-          return <Box key={`${ingredient}-${i}`} display='flex' justifyContent='space-between'>
+    <Box display='flex' flexWrap='wrap'>
+      {visibleIngredients ? (
+        visibleIngredients.map((ingredient: IIngredient, i: number) => {
+          return <Box key={`${ingredient}-${i}`} display='flex' justifyContent='space-between' margin={2}>
             <Box className={classes.ingredientCards}>
               <Box
-              style={{ backgroundImage: `url(${IMAGES_API_URL}/${ingredient._id})` }} className={classes.imageContainer}>
-                <Typography> {ingredient.name}</Typography>
+                style={{ backgroundImage: `url(${IMAGES_API_URL}/${ingredient._id})` }} className={classes.imageContainer}>
+                <Box display='flex' alignItems='center' justifyContent='space-between'>
+                  <Typography> {ingredient.name}</Typography>
+                  <label htmlFor={ingredient._id}>
+                    <IconButton
+                      color='primary'
+                      aria-label='upload picture'
+                      component='span'>
+                      <PhotoCamera />
+                    </IconButton>
+                  </label>
+                </Box>
               </Box>
-              <Button variant='contained'>+  Add</Button>
+                <Button variant='contained' className={classes.addButton}>+  Add</Button>
+              <input
+                accept='image/*'
+                className={classes.input}
+                id={ingredient._id}
+                type='file'
+                onChange={(e: ChangeEvent<HTMLInputElement>) => handleClick(e, ingredient._id)}
+              />
             </Box>
-            <input
-              accept='image/*'
-              className={classes.input}
-              id={ingredient._id}
-              type='file'
-              onChange={(e: ChangeEvent<HTMLInputElement>) => handleClick(e, ingredient._id)}
-            />
-            <label htmlFor={ingredient._id}>
-              <IconButton
-                color='primary'
-                aria-label='upload picture'
-                component='span'>
-                <PhotoCamera />
-              </IconButton>
-            </label>
           </Box>
-        }) : <Typography> Loading data ... </Typography>}
+        })) : <Typography> Loading data ... </Typography>}
+        </Box>
     </InfiniteScroll>
   );
 }

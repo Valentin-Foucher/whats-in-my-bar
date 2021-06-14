@@ -8,7 +8,7 @@ import Introduction from '../components/homepage/Introduction';
 
 
 const useStyles = makeStyles({
-  title:{
+  title: {
     padding: '5rem 0 4rem',
     fontFamily: 'Limelight',
     textAlign: 'center',
@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 });
 
 
-export default function HomePage () {
+export default function HomePage() {
   const classes = useStyles();
   const [openConnect, setOpenConnect] = useState<boolean>(false);
 
@@ -41,9 +41,9 @@ export default function HomePage () {
         <Typography variant={'h1'} className={classes.title}> What's in my bar ? </Typography>
         <Introduction />
         <Box display='flex'>
-        <FilterMenu />
-        <HomeBox />
-      </Box>
+          <FilterMenu />
+          <HomeBox />
+        </Box>
     </Box>
   );
 };
