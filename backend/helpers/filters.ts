@@ -1,14 +1,17 @@
 import { Request } from 'express';
 import { SchemaDefinition } from 'mongoose';
 
-const getFilters = (req: Request, definition: SchemaDefinition<any>, excludedKeys?: Array<string>): {[key: string]: string} => {
+const getFilters = (req: Request, definition: SchemaDefinition<any>, excludedKeys?: Array<string>, additionalKeys?: Array<string>): {[key: string]: any} => {
   const filters = {};
   const allKeys = Object.keys(definition);
-  const acceptedKeys = excludedKeys ? allKeys.filter((key) => !(excludedKeys.includes(key))) : allKeys;
+  let acceptedKeys = excludedKeys ? allKeys.filter((key) => !(excludedKeys.includes(key))) : allKeys;
+  if (additionalKeys) {
+    acceptedKeys = [...acceptedKeys, ...additionalKeys];
+  };
 
   for (const [key, param] of Object.entries(req.query)) {
-    if (acceptedKeys.includes(key.split('.')[0]) && !(param instanceof Array)) {
-      filters[key] = param as string;
+    if (acceptedKeys.includes(key.split('.')[0])) {
+      filters[key] = param;
     };
   };
 

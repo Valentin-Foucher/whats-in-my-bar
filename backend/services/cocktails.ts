@@ -47,7 +47,13 @@ const listCocktails = async (req: Request, res: Response) => {
     username = (await users.findById(req.userId)).username
   };
 
-  const cocktailList = await cocktails.list(username, getFilters(req, CocktailSchemaDefinition, ['public']));
+  let getCocktails: (username: string, filters?: { [key: string]: any}) => Promise<Array<ICocktail>>;
+  if (req.query.popularity) {
+    getCocktails = cocktails.listByPopularity;
+  } else {
+    getCocktails = cocktails.list;
+  };
+  const cocktailList = await getCocktails(username, getFilters(req, CocktailSchemaDefinition, ['public'], ['sort']));
 
   ok(res, { cocktails: cocktailList });
 };
@@ -73,7 +79,7 @@ const getCocktailsFromBar = async (req: Request, res: Response) => {
     return ok(res, {});
   };
 
-  const allCocktailList = await cocktails.list(username, getFilters(req, CocktailSchemaDefinition, ['public']))
+  const allCocktailList = await cocktails.list(username, getFilters(req, CocktailSchemaDefinition, ['public'], ['sort']))
 
   const withMissingIngredients = [];
   const cocktailList = [];

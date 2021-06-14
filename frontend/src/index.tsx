@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import App from './App';
-import SignInScreen from './screens/public/SignIn';
-import SignUpScreen from './screens/public/SignUp';
+import SignInScreen from './screens/SignIn';
+import SignUpScreen from './screens/SignUp';
 import store from './store/store';
 import './styles/index.css';
 

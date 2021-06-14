@@ -13,8 +13,13 @@ services:
       - "mongo"
     networks:
       - network
+    volumes:
+      - ./backend:/var/app/backend
 
   frontend:
+    stdin_open: true
+    tty: true
+    container_name: frontend
     build:
       context: .
       dockerfile: frontend/Dockerfile
@@ -24,6 +29,8 @@ services:
       - "backend"
     networks:
       - network
+    volumes:
+      - ./frontend/src:/var/app/frontend/src
 
   mongo:
     image: "mongo:4.4.6"

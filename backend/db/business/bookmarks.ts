@@ -4,28 +4,28 @@ import { ITEM_TYPES } from '../../helpers/constants';
 import Bookmark from '../models/bookmarks';
 
 module Bookmarks {
-  export const create = async (item: ObjectID, type: typeof ITEM_TYPES[number]): Promise<IBookmark> => {
-    return await Bookmark.create({ item, type });
+  export const create = async (userId: ObjectID, item: ObjectID, type: typeof ITEM_TYPES[number]): Promise<IBookmark> => {
+    return await Bookmark.create({ userId, item, type });
   };
 
-  export const list = async (type: string): Promise<Array<IBookmark>> => {
-    return await Bookmark.find({ type });
+  export const list = async (userId: ObjectID, type: string): Promise<Array<IBookmark>> => {
+    return await Bookmark.find({ userId, type });
   };
 
-  export const getById = async (id: ObjectID): Promise<IBookmark> => {
-    return await Bookmark.findById(id);
+  export const getById = async (userId: ObjectID, id: ObjectID): Promise<IBookmark> => {
+    return await Bookmark.findById(userId, id);
   };
 
-  export const getByItem = async (item: ObjectID): Promise<IBookmark> => {
-    return await Bookmark.findOne({ item });
+  export const getByItem = async (userId: ObjectID, item: ObjectID): Promise<IBookmark> => {
+    return await Bookmark.findOne({ userId, item });
   };
 
-  export const getByType = async (type: typeof ITEM_TYPES[number]): Promise<Array<IBookmark>> => {
-    return await Bookmark.find({ type });
+  export const getByType = async (userId: ObjectID, type: typeof ITEM_TYPES[number]): Promise<Array<IBookmark>> => {
+    return await Bookmark.find({ userId, type });
   };
 
-  export const remove = async (id: ObjectID) => {
-    await Bookmark.findByIdAndDelete(id);
+  export const remove = async (userId: ObjectID, _id: string): Promise<IBookmark | null> => {
+    return await Bookmark.findOneAndDelete({ userId, _id });
   }
 
   export const drop = async () => {

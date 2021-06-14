@@ -1,5 +1,5 @@
 import { API_URL } from './common';
-import axios from "axios";
+import axios from 'axios';
 
 const COCKTAILS_API_URL = `${API_URL}/cocktails`;
 

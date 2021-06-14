@@ -8,7 +8,7 @@ module Ingredients {
   };
 
   export const list = async (filters?: { [key: string]: any }): Promise<Array<IIngredient>> => {
-    return await Ingredient.find({ ...filters });
+    return await Ingredient.find({ ...filters }, null, { sort: { name: 1 } });
   };
 
   export const getById = async (id: ObjectID): Promise<IIngredient> => {

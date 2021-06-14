@@ -19,7 +19,8 @@ module Articles {
             preview: { $substr: [ '$content', 0, 200 ] },
             author: 1
           }
-      }
+      },
+      { $sort: { title: 1 } }
     ]);
   };
 

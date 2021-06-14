@@ -6,10 +6,6 @@
     "nodemon": "^2.0.7",
     "react-scripts": "4.0.3"
   },
-  "engines": {
-    "node": "12.x",
-    "yarn": "1.x"
-  },
   "scripts": {
     "heroku-prebuild": "yarn --cwd backend install && yarn --cwd frontend"
   },
