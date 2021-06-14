@@ -6,7 +6,7 @@
     "scripts": {
         "test": "if [ -z \"$(lsof -i:27017)\" ]; then docker run -d  -p 27017:27017 mongo:4.4.6 mongod --port 27017 --bind_ip_all;fi && DB_NAME=test TEST=true mocha -r ts-node/register --exit tests/**/*.spec.ts",
         "start": "nodemon ./app.ts localhost 8080",
-        "start:production": "ENV=production DB_PORT=27017 DB_HOST=$MONGO_HOST DB_USER=$MONGO_USER DB_PASSWORD=$MONGO_PASSWORD nodemon ./app.ts localhost 8080",
+        "start:production": "ENV=production DB_PORT=27017 DB_HOST=$MONGO_HOST DB_USER=$MONGO_USER DB_PASSWORD=$MONGO_PASSWORD nodemon ./app.ts localhost 8080 --max-old-space-size=512 --optimize_for_size",
         "images": "bash -c 'cd ${0}/ && mongofiles --replace --db bar put *'"
     },
     "author": "Valentin Foucher",
