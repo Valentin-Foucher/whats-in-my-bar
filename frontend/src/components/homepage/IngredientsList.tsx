@@ -1,10 +1,12 @@
 import { Box, Button, IconButton, makeStyles, Typography } from '@material-ui/core';
 import { PhotoCamera } from '@material-ui/icons';
+import clsx from 'clsx';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { IIngredient } from '../../../../interfaces/src/ingredients';
 import { IMAGES_API_URL, uploadImage } from '../../api/images';
 import { listIngredients } from '../../api/ingredients';
+import colors from '../../styles/colors';
 
 
 const SCROLL_SIZE = 15;
@@ -15,7 +17,8 @@ const useStyles = makeStyles({
     height: 200,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
-
+    borderRadius: '4px 4px 0 0',
+    boxShadow: '-1px 4px 4px 0px rgba(0,0,0,0.1)'
   },
   input: {
     display: 'none'
@@ -33,10 +36,27 @@ const useStyles = makeStyles({
   addButton: {
     fontWeight: 600,
   },
+  removeButton: {
+    '&:active': {
+      backgroundColor: '#ff0000'
+    },
+  },
+  ingredientName: {
+    background: colors.gradient,
+    padding: 4,
+    marginLeft: 4,
+    borderRadius: 6,
+    fontWeight: 700,
+    color: '#fff',
+    textTransform: 'capitalize',
+    fontSize: 14,
+    boxShadow: '-1px 4px 4px 0px rgba(0,0,0,0.1)',
+  }
 });
 
 export default function IngredientsList() {
   const classes = useStyles();
+  const [addedIngredients, setAddedIngredients] = useState<string[]>([])
   const [ingredients, setIngredients] = useState<IIngredient[]>();
   const [visibleIngredients, setVisibleIngredients] = useState<IIngredient[]>();
   const [cursor, setCursor] = useState<number>(0);
@@ -52,10 +72,6 @@ export default function IngredientsList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ingredients]);
 
-  const handleClick = (e: ChangeEvent<HTMLInputElement>, ingredientId: string) => {
-    if (e.target && e.target.files) uploadImage(e.target.files[0], ingredientId);
-  };
-
   const getNextIngredients = () => {
     if (ingredients) {
       const newCursor = cursor + SCROLL_SIZE;
@@ -63,6 +79,20 @@ export default function IngredientsList() {
       setCursor(newCursor);
     }
   }
+
+  const handleAddPicture = (e: ChangeEvent<HTMLInputElement>, ingredientId: string) => {
+    if (e.target && e.target.files) uploadImage(e.target.files[0], ingredientId);
+  };
+
+  const handleAddIngredient = (e: any, ingredientId: string) => {
+    setAddedIngredients([...addedIngredients, ingredientId])
+  }
+
+  const handleRemoveIngredient = (e: any, ingredientId: string) => {
+    const removeIngredient = addedIngredients.filter(ingredient => ingredient !== ingredientId)
+    setAddedIngredients(removeIngredient)
+  }
+
 
   return (
     <InfiniteScroll
@@ -79,7 +109,7 @@ export default function IngredientsList() {
               <Box
                 style={{ backgroundImage: `url(${IMAGES_API_URL}/${ingredient._id})` }} className={classes.imageContainer}>
                 <Box display='flex' alignItems='center' justifyContent='space-between'>
-                  <Typography> {ingredient.name}</Typography>
+                  <Typography className={classes.ingredientName}> {ingredient.name}</Typography>
                   <label htmlFor={ingredient._id}>
                     <IconButton
                       color='primary'
@@ -90,13 +120,21 @@ export default function IngredientsList() {
                   </label>
                 </Box>
               </Box>
-                <Button variant='contained' className={classes.addButton}>+  Add</Button>
+              <Button variant='contained'
+                disableRipple
+                onClick={(e: any) => 
+                  addedIngredients.includes(ingredient._id) ?
+                  handleRemoveIngredient(e, ingredient._id) : 
+                  handleAddIngredient(e, ingredient._id)}
+                className={clsx(classes.addButton, {[classes.removeButton]: addedIngredients.includes(ingredient._id)})}>
+                  {addedIngredients.includes(ingredient._id) ? 'Remove' : 'Add'}
+              </Button>
               <input
                 accept='image/*'
                 className={classes.input}
                 id={ingredient._id}
                 type='file'
-                onChange={(e: ChangeEvent<HTMLInputElement>) => handleClick(e, ingredient._id)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => handleAddPicture(e, ingredient._id)}
               />
             </Box>
           </Box>
