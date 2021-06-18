@@ -40,10 +40,10 @@ describe('Images API', () => {
       });
     });
 
-    it('should obtain a conflict', async () => {
+    it('should obtain recreate the image', async () => {
       await createImage(app, ingredient.id);
       const res = await createImage(app, ingredient.id);
-      expect(res).to.have.status(409);
+      expect(res).to.have.status(204);
     });
   });
 

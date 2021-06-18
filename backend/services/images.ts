@@ -13,7 +13,7 @@ const uploadImage = async (req: Request, res: Response) => {
   const { filename, originalname } = req.file;
 
   if (await images.count(new ObjectID(filename)) > 0) {
-    return conflict(res, 'An image already exists for this item');
+    await images.removeByFilename(new ObjectID(filename));
   };
 
   await images.create(new ObjectID(filename), path.extname(originalname).replace('.', ''));

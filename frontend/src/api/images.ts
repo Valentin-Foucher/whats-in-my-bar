@@ -20,17 +20,4 @@ const retrieveImage = async (filename: string) => {
   return await axios.get(`${IMAGES_API_URL}/${filename}`)
 };
 
-const updateImage = async (file: File, referenceId: string) => {
-  var bodyFormData = new FormData();
-  bodyFormData.append('referenceId', referenceId);
-  bodyFormData.append('file', file);
-
-  return await axios.request({
-    url: IMAGES_API_URL,
-    method: 'put',
-    data: bodyFormData,
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
-};
-
-export { uploadImage, retrieveImage, updateImage, IMAGES_API_URL };
+export { uploadImage, retrieveImage, IMAGES_API_URL };
