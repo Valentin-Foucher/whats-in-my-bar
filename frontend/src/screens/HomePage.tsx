@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import ConnectModal from '../components/homepage/ConnectModal';
 import FilterMenu from '../components/homepage/FilterMenu';
 import HomeBox from '../components/homepage/HomeBox';
+import Introduction from '../components/homepage/Introduction';
 
 
 
@@ -38,6 +39,7 @@ export default function HomePage () {
         <Button variant='outlined' color='primary' onClick={handleClick} className={classes.connexionButton}> Connect</Button>
         <ConnectModal open={openConnect} onClose={handleCloseModal}/>
         <Typography variant={'h1'} className={classes.title}> What's in my bar ? </Typography>
+        <Introduction />
         <Box display='flex'>
         <FilterMenu />
         <HomeBox />
