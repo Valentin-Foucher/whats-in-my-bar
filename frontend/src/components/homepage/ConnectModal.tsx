@@ -17,7 +17,7 @@ interface ModalProps {
 
 export default function ConnectModal({open, onClose}: ModalProps) {
 
-  const classes= useStyles()
+  const classes = useStyles()
   return (
     <Dialog
       maxWidth='md'
