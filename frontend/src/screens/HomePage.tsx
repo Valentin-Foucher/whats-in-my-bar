@@ -1,9 +1,10 @@
-import { Box, Button, makeStyles, Typography } from '@material-ui/core';
-import React, { useState } from 'react';
-import ConnectModal from '../components/homepage/ConnectModal';
+import { Box, makeStyles, Typography } from '@material-ui/core';
+import React from 'react'
+import PreventionPhrase from '../components/general/PreventionPhrase';
 import FilterMenu from '../components/homepage/FilterMenu';
 import HomeBox from '../components/homepage/HomeBox';
 import Introduction from '../components/homepage/Introduction';
+import Navbar from '../components/homepage/Navbar';
 
 
 
@@ -23,27 +24,17 @@ const useStyles = makeStyles({
 
 export default function HomePage() {
   const classes = useStyles();
-  const [openConnect, setOpenConnect] = useState<boolean>(false);
-
-  const handleClick = () => {
-    setOpenConnect(true)
-  };
-
-  const handleCloseModal = () => {
-    setOpenConnect(false)
-  };
 
   return (
-
-    <Box>
-      <Button variant='outlined' color='primary' onClick={handleClick} className={classes.connexionButton}> Connect</Button>
-      <ConnectModal open={openConnect} onClose={handleCloseModal}/>
-      <Typography variant={'h1'} className={classes.title}> What's in my bar ? </Typography>
-      <Introduction />
-      <Box display='flex'>
+      <Box>
+        <Typography variant={'h1'} className={classes.title}> What's in my bar ? </Typography>
+        <Introduction />
+        <Navbar />
+        <Box display='flex'>
         <FilterMenu />
         <HomeBox />
       </Box>
+      <PreventionPhrase />
     </Box>
   );
 };
