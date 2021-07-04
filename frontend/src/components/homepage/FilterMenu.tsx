@@ -1,5 +1,6 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
+import colors from '../../styles/colors';
 
 const useStyles = makeStyles({
   container: {
@@ -12,7 +13,7 @@ const useStyles = makeStyles({
     alignItems:'center',
     justifyContent: 'center',
     overflowY: 'auto',
-    background: 'linear-gradient(45deg, #DF1448, rgba(244, 106, 38, 0.8))',
+    background: colors.gradient,
     boxShadow: '0px 8px 7px 3px #DF1448'
   },
   progress: {
