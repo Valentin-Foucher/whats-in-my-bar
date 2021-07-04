@@ -1,7 +1,7 @@
 import { Box, Button, IconButton, makeStyles, Typography } from '@material-ui/core';
-import { PhotoCamera } from '@material-ui/icons';
+import { CancelOutlined, CheckCircleOutline, PhotoCamera } from '@material-ui/icons';
 import clsx from 'clsx';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { IIngredient } from '../../../../interfaces/src/ingredients';
 import { IMAGES_API_URL, uploadImage } from '../../api/images';
@@ -35,10 +35,13 @@ const useStyles = makeStyles({
   },
   addButton: {
     fontWeight: 600,
+    '&:active': {
+      backgroundColor: colors.green
+    },
   },
   removeButton: {
     '&:active': {
-      backgroundColor: '#ff0000'
+      backgroundColor: colors.red
     },
   },
   ingredientName: {
@@ -90,7 +93,10 @@ export default function IngredientsList() {
 
   const handleRemoveIngredient = (e: any, ingredientId: string) => {
     const removeIngredient = addedIngredients.filter(ingredient => ingredient !== ingredientId)
-    setAddedIngredients(removeIngredient)
+  }
+
+  const handleClickIngredient = (e: MouseEvent<HTMLButtonElement>, ingredientId: string) => {
+    addedIngredients.includes(ingredientId) ? handleRemoveIngredient(e, ingredientId) : handleAddIngredient(e, ingredientId)
   }
 
 
@@ -121,11 +127,10 @@ export default function IngredientsList() {
                 </Box>
               </Box>
               <Button variant='contained'
+              endIcon={addedIngredients.includes(ingredient._id) ? <CancelOutlined /> : <CheckCircleOutline /> }
                 disableRipple
-                onClick={(e: any) => 
-                  addedIngredients.includes(ingredient._id) ?
-                  handleRemoveIngredient(e, ingredient._id) : 
-                  handleAddIngredient(e, ingredient._id)}
+                onClick={(e: MouseEvent<HTMLButtonElement>) =>
+                  handleClickIngredient(e, ingredient._id)}
                 className={clsx(classes.addButton, {[classes.removeButton]: addedIngredients.includes(ingredient._id)})}>
                   {addedIngredients.includes(ingredient._id) ? 'Remove' : 'Add'}
               </Button>

@@ -35,15 +35,15 @@ export default function HomePage() {
 
   return (
 
-      <Box>
-        <Button variant='outlined' color='primary' onClick={handleClick} className={classes.connexionButton}> Connect</Button>
-        <ConnectModal open={openConnect} onClose={handleCloseModal}/>
-        <Typography variant={'h1'} className={classes.title}> What's in my bar ? </Typography>
-        <Introduction />
-        <Box display='flex'>
-          <FilterMenu />
-          <HomeBox />
-        </Box>
+    <Box>
+      <Button variant='outlined' color='primary' onClick={handleClick} className={classes.connexionButton}> Connect</Button>
+      <ConnectModal open={openConnect} onClose={handleCloseModal}/>
+      <Typography variant={'h1'} className={classes.title}> What's in my bar ? </Typography>
+      <Introduction />
+      <Box display='flex'>
+        <FilterMenu />
+        <HomeBox />
+      </Box>
     </Box>
   );
 };
