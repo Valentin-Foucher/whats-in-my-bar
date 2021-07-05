@@ -59,7 +59,7 @@ const useStyles = makeStyles({
 
 export default function IngredientsList() {
   const classes = useStyles();
-  const [addedIngredients, setAddedIngredients] = useState<string[]>([])
+  const [addedIngredients, setAddedIngredients] = useState<string[]>([]);
   const [ingredients, setIngredients] = useState<IIngredient[]>();
   const [visibleIngredients, setVisibleIngredients] = useState<IIngredient[]>();
   const [cursor, setCursor] = useState<number>(0);
@@ -80,25 +80,24 @@ export default function IngredientsList() {
       const newCursor = cursor + SCROLL_SIZE;
       setVisibleIngredients(ingredients.slice(0, newCursor));
       setCursor(newCursor);
-    }
-  }
+    };
+  };
 
   const handleAddPicture = (e: ChangeEvent<HTMLInputElement>, ingredientId: string) => {
     if (e.target && e.target.files) uploadImage(e.target.files[0], ingredientId);
   };
 
   const handleAddIngredient = (e: any, ingredientId: string) => {
-    setAddedIngredients([...addedIngredients, ingredientId])
-  }
+    setAddedIngredients([...addedIngredients, ingredientId]);
+  };
 
   const handleRemoveIngredient = (e: any, ingredientId: string) => {
-    const removeIngredient = addedIngredients.filter(ingredient => ingredient !== ingredientId)
-  }
+    setAddedIngredients(addedIngredients.filter(ingredient => ingredient !== ingredientId));
+  };
 
   const handleClickIngredient = (e: MouseEvent<HTMLButtonElement>, ingredientId: string) => {
-    addedIngredients.includes(ingredientId) ? handleRemoveIngredient(e, ingredientId) : handleAddIngredient(e, ingredientId)
-  }
-
+    addedIngredients.includes(ingredientId) ? handleRemoveIngredient(e, ingredientId) : handleAddIngredient(e, ingredientId);
+  };
 
   return (
     <InfiniteScroll
