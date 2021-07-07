@@ -10,6 +10,8 @@ import SupportUs from './SupportUs';
 
 const useStyles = makeStyles({
   root: {
+    position: 'relative',
+    bottom: 0,
     width: '100%',
     height: '6vh',
     backgroundColor: colors.primary

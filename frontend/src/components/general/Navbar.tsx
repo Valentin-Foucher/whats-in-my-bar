@@ -6,7 +6,6 @@ import {
   Typography
 } from '@material-ui/core';
 import React from 'react';
-import HomeIcon from '@material-ui/icons/Home';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import LocalBarIcon from '@material-ui/icons/LocalBar';
 import AddIcon from '@material-ui/icons/Add';
@@ -24,10 +23,14 @@ const useStyles = makeStyles({
     display: 'flex'
   },
   toolbar: {
+    minHeight: '7vh',
     justifyContent: 'space-between'
   },
   navItem: {
     display: 'flex'
+  },
+  title: {
+    marginRight: '70px'
   },
   leftNavText: {
     marginRight: '20px'
@@ -94,7 +97,9 @@ export default function Navbar() {
     <Toolbar className={classes.toolbar}>
       <div className={classes.navMenu}>
         <Link to='/'>
-          <BarItem title='Home' side='left' Icon={HomeIcon} />
+          <Typography className={classes.title}>
+            What's in my bar ?
+          </Typography>
         </Link>
         <Link to='/articles'>
           <BarItem title='Articles' side='left' Icon={AssignmentIcon} />
