@@ -1,5 +1,6 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import React from 'react'
+import Footer from '../components/general/Footer';
 import PreventionPhrase from '../components/general/PreventionPhrase';
 import FilterMenu from '../components/homepage/FilterMenu';
 import HomeBox from '../components/homepage/HomeBox';
@@ -35,6 +36,7 @@ export default function HomePage() {
         <HomeBox />
       </Box>
       <PreventionPhrase />
+      <Footer />
     </Box>
   );
 };
