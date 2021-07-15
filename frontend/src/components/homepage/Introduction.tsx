@@ -1,10 +1,19 @@
 
+import { makeStyles } from '@material-ui/core';
 import React from 'react';
 
+
+const useStyles = makeStyles({
+  introduction: {
+    padding: '2rem 2rem 2rem',
+  }
+});
+
 export default function Introduction() {
+  const classes = useStyles();
 
   return (
-    <>
+    <div className={classes.introduction}>
       <p>
         Welcome to What's In My Bar! Try out our cocktail builder and check out our articles!
       </p>
@@ -15,6 +24,6 @@ export default function Introduction() {
       <p>
         Cheers!
       </p>
-    </>
+    </div>
   );
 }

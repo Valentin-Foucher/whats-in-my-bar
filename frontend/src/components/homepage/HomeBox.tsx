@@ -68,7 +68,6 @@ export default function HomeBox() {
         className={classes.tabMenu}>
         <Tab label='Ingredients' className={classes.tab} />
         <Tab label='Cocktails' className={classes.tab} />
-        <Tab label='My Bar' className={classes.tab} />
       </Tabs>
       <TabPanel value={menuIndex} index={0}>
         <IngredientsList />
