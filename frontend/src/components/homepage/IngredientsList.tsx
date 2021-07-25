@@ -57,7 +57,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function IngredientsList() {
+export default function IngredientsList(props: { scrollParentRef: any }) {
   const classes = useStyles();
   const [addedIngredients, setAddedIngredients] = useState<string[]>([]);
   const [ingredients, setIngredients] = useState<IIngredient[]>();
@@ -101,10 +101,11 @@ export default function IngredientsList() {
 
   return (
     <InfiniteScroll
-      pageStart={0}
       loadMore={getNextIngredients}
       hasMore={ingredients ? cursor < ingredients.length : false}
       className={classes.infiniteScroll}
+      useWindow={false}
+      getScrollParent={() => props.scrollParentRef}
   >
     <Box display='flex' flexWrap='wrap'>
       {visibleIngredients ? (

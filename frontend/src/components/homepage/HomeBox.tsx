@@ -21,6 +21,8 @@ const useStyles = makeStyles({
     marginLeft: 20,
     height: '75vh',
     alignContent: 'center',
+    overflowY: 'scroll',
+    maxHeight: '100vh'
   },
   tabMenu: {
     fontWeight: 600,
@@ -50,6 +52,7 @@ function TabPanel(props: TabPanelProps) {
 
 export default function HomeBox() {
   const [menuIndex, setMenuIndex] = useState(0);
+  const [scrollParentRef, setScrollParentRef] = useState<HTMLDivElement | null>();
   const classes = useStyles();
 
   const handleChange = (e: ChangeEvent<{}>, indexSelected: number) => {
@@ -57,7 +60,7 @@ export default function HomeBox() {
   };
 
   return (
-    <Container className={classes.container} maxWidth='xl'>
+    <Container className={classes.container} ref={(ref) => setScrollParentRef(ref)} maxWidth='xl'>
       <Tabs
         aria-label='tabs-menu'
         textColor='primary'
@@ -70,7 +73,7 @@ export default function HomeBox() {
         <Tab label='Cocktails' className={classes.tab} />
       </Tabs>
       <TabPanel value={menuIndex} index={0}>
-        <IngredientsList />
+        <IngredientsList scrollParentRef={scrollParentRef}/>
       </TabPanel>
       <TabPanel value={menuIndex} index={1}>
         SOON - The marvelous Val's Cocktails
