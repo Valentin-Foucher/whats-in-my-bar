@@ -7,6 +7,7 @@ import {
   Typography
 } from '@material-ui/core';
 import React, { ChangeEvent, useState } from 'react';
+import CocktailForm from './CocktailForm';
 import IngredientsList from './IngredientsList';
 
 interface TabPanelProps {
@@ -73,11 +74,9 @@ export default function HomeBox() {
         <IngredientsList />
       </TabPanel>
       <TabPanel value={menuIndex} index={1}>
-        SOON - The marvelous Val's Cocktails
+        <CocktailForm />
       </TabPanel>
-      <TabPanel value={menuIndex} index={2}>
-        Add items to your bar
-      </TabPanel>
+
     </Container>
   );
 }
